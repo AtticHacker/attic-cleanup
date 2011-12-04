@@ -54,6 +54,11 @@ module AtticCleanup
       end
     end
     
+    desc "default", "Set a default path for store."
+    def default(input)
+      AtticCleanup::Path::Custom.default(input)
+    end
+    
     desc "shortcuts", "View all available shortcuts"
     # Show all the availible shortcuts from the custom_paths.txt file
     def shortcuts

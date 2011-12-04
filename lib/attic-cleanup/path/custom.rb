@@ -82,6 +82,12 @@ module AtticCleanup
           w.write("\n"+ @name + " " + @path)
         end
       end
+      
+      def self.default(value)
+        File.open(MyAttic::DEFAULT, 'w') do |w| 
+          w.write("#Write your default location here.\n#{value}")
+        end
+      end
     end
   end
 end
