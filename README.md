@@ -97,3 +97,10 @@ attic-cleanup new --name projects --path ~/MyProjects/CurrentProject
 This will generate a new shortcut. The shortcut name will be @projects and the path will be ~/MyProjects/CurrentProject
 
 You can always adjust shortcuts and default location in MyAttic folder.
+
+Setting default with the 'default' command
+==========================================
+attic-cleanup default ~/MyProject
+
+
+This will adjust the default location for the store command to ~/MyProject instead of Desktop
