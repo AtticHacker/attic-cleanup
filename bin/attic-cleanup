@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require File.expand_path("../../lib/attic-cleanup", __FILE__)
+require File.expand_path("../../lib/attic-cleanup/utility", __FILE__)
+AtticCleanup::Utility.start
