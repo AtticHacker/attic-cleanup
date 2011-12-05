@@ -5,11 +5,13 @@ module AtticCleanup
     CUSTOM_FILE   = "#Write all your custom paths here.
 #Or generate them with the 'attic-cleanup new' command
 #Write all your custom paths like the examples, no extra spaces.
+des #{File.join(ENV['HOME'], 'Desktop')}
 doc #{File.join(ENV['HOME'], 'Documents')}
 pic #{File.join(ENV['HOME'], 'Pictures')}
 mus #{File.join(ENV['HOME'], 'Music')}
 mov #{File.join(ENV['HOME'], 'Movies')}
-dow #{File.join(ENV['HOME'], 'Downloads')}"
+dow #{File.join(ENV['HOME'], 'Downloads')}
+dro #{File.join(ENV['HOME'], 'Dropbox')}"
 
     # Default text for the default_path.txt file
     DEFAULT_FILE  = "#Write your default location here.
@@ -24,8 +26,7 @@ dow #{File.join(ENV['HOME'], 'Downloads')}"
 #{File.join(ENV['HOME'], 'Music')}
 #{File.join(ENV['HOME'], 'Movies')}
 #{File.join(ENV['HOME'], 'Downloads')}
-#{File.join(ENV['HOME'], 'Dropbox')}
-#{File.join(ENV['HOME'], 'MyAttic')}"
+#{File.join(ENV['HOME'], 'Dropbox')}\n#{File.join(ENV['HOME'], 'MyAttic')}"
 
     # Checks if folder exists, if it doesn't it will be created
     def self.check_folder(value)
@@ -56,11 +57,11 @@ dow #{File.join(ENV['HOME'], 'Downloads')}"
     def self.clear
       attic_folders = Dir.glob(File.join(MyAttic::ATTIC, "*"));
       attic_folders.each do |f|
-        if f == MyAttic::CUSTOM || f == MyAttic::LOG || f == MyAttic::TODAY || f == MyAttic::DEFAULT || f == MyAttic::IGNORE
+        if f == MyAttic::TODAY
         elsif Dir[File.join(f, "/*")].empty?
           FileUtils.rm_rf(f)
         end
       end
-    end
+    end  
   end
 end

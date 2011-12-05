@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name = 'attic-cleanup'
-  spec.version ='0.0.3'
+  spec.version ='0.0.5'
   spec.platform    = Gem::Platform::RUBY
 
   spec.files = ["README.md", "bin/attic-cleanup", "lib/attic-cleanup.rb",

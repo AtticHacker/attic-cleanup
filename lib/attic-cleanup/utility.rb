@@ -6,11 +6,14 @@ module AtticCleanup
     "Choose a path or shortcut to store the contents of the given folder.
     custom paths are called by placing an '@' sign in front of it.
     example: @mypath
+    You can also store from one place to another, example:
+    attic-cleanup store @doc @myproject
+    Now you can choose files / folders from the @doc path and send them to the @myproject folder.
     
     -a => 'all'
     -f => 'force'\n\n"
     method_options :a => :boolean, :f => :boolean
-    def store(input="")
+    def store(location="", destination="")
       
       # Checks if the options are set
       if options[:a]
@@ -19,21 +22,24 @@ module AtticCleanup
       if options[:f]
         f = true
       end
-      
-      # If the input for store has an "@" at the beginning
-      # it's a shortcut.
-      if input[0..0] == "@"
-        c = AtticCleanup::Path::Custom.new
-        # The input without the first character (the @ sign)
-        c.name = input[1..-1]
-        c.file = MyAttic::CUSTOM
-        input = c.find_custom
-      end
+
       # The input is the location, if the input had an @ sign
       # at the beginning, the custom path will be stored in input variable
+      c = AtticCleanup::Path::Custom.new
       s = AtticCleanup::Storage::StoreFiles.new
-      s.location = input
-      s.check
+      if destination != nil && destination != ""
+        destination = c.check_shortcut(destination)
+        s.destination = destination
+        s.check = destination
+      else
+        destination = MyAttic::TODAY
+        s.destination = destination
+        s.check = s.destination
+      end
+      location = c.check_shortcut(location)
+      s.location = location
+      location = s.location
+      s.check = location
       s.store(a, f)
     end
 
@@ -56,6 +62,8 @@ module AtticCleanup
     
     desc "default", "Set a default path for store."
     def default(input)
+      c = AtticCleanup::Path::Custom.new
+      input = c.check_shortcut(input)
       AtticCleanup::Path::Custom.set_default(input)
     end
     
@@ -63,6 +71,7 @@ module AtticCleanup
     def ignore(input)
       AtticCleanup::Path::Custom.set_ignore(input)
     end
+    
     desc "shortcuts", "View all available shortcuts"
     # Show all the availible shortcuts from the custom_paths.txt file
     def shortcuts

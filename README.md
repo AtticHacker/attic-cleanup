@@ -81,6 +81,15 @@ Type y to continue or type n to exit.
 Once you press y all the file will be moved to the MyAttic folder and every file will be printed in the log.txt file.
 
 
+Last Example: I want to send certain files in a folder to a different folder, but not the MyAttic folder
+========================================================================================================
+attic-cleanup store @doc @projects
+
+
+This line will give you the option to send files / folders from @doc to @projects.
+
+This works exactly the same way as storing files to the MyAttic folder, except you're storing your files to a different location
+
 Checking which shortcuts are available
 ======================================
 attic-cleanup shortcuts

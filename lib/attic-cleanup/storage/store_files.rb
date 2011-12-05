@@ -3,6 +3,8 @@ module AtticCleanup
   module Storage
     class StoreFiles
       
+      attr_accessor :destination
+            
       # Easy method for input
       def input
         STDOUT.flush
@@ -17,7 +19,7 @@ module AtticCleanup
       # If the location wasn't set, the default
       # location will be used from the default_path.txt file
       def location= ( value )
-        if value == ""
+        if value == "" || value == nil
           value = AtticCleanup::Path::Custom.default
         elsif value == "."
           Dir.chdir(".")
@@ -26,11 +28,15 @@ module AtticCleanup
         end
         @location = value
       end
-
+      
       # Checks if the selected path exists
       def check
-        if !File.directory? @location
-          puts "Invalid path "  + @location
+        @check
+      end
+      
+      def check=(value)
+        if !File.directory? value
+          puts "Invalid path "  + value
           exit 1
         end
       end
@@ -69,7 +75,8 @@ module AtticCleanup
           i = 1
           while i == 1
             # Message with the current location and simple instructions
-            puts "\n"+location
+            puts "\nFrom: #{location}"
+            puts "To:   #{destination}"
             puts "Which files do you want to store in your attic?"
             puts "Type ls for the list of items"
             puts "Select the items by id. Example: 1,3,5"
@@ -133,11 +140,11 @@ module AtticCleanup
           else
             # If file was found move it, print it and record it in the log
             puts "Moving " + selected_file + " to your attic.."
-            AtticCleanup::Log.save(selected_file, MyAttic::TODAY)
-            FileUtils.mv(selected_file, MyAttic::TODAY)
+            AtticCleanup::Log.save(selected_file, @destination)
+            FileUtils.mv(selected_file, @destination)
           end
         end
-        puts "The files have been moved to " + MyAttic::TODAY
+        puts "The files have been moved to " + @destination
       end
     end
   end

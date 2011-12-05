@@ -15,6 +15,17 @@ module AtticCleanup
         end
       end
       
+      def check_shortcut(input)
+        if input[0..0] == "@"
+          c = AtticCleanup::Path::Custom.new
+          # The input without the first character (the @ sign)
+          c.name = input[1..-1]
+          c.file = MyAttic::CUSTOM
+          input = c.find_custom
+        end
+        input
+      end
+      
       # Selects every line from the selected file
       # but ignores lines where the first character is '#'
       def self.all(file)
@@ -66,7 +77,7 @@ module AtticCleanup
             end
           end
           if selected_line == nil
-            puts "Shortcut not found"
+            puts "Shortcut not found '@#{@name}'"
             exit 1
           else
             the_name_count = the_name.count("A-z, \s")
