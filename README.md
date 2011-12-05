@@ -104,3 +104,14 @@ attic-cleanup default ~/MyProject
 
 
 This will adjust the default location for the store command to ~/MyProject instead of Desktop
+
+
+Adding files to ignore
+========================
+attic-cleanup ignore ~/Desktop/MyProject
+
+This will add the path to MyProject to the ignore_files.txt file.
+Every path in this file will be ignored if you try to store it (or all).
+So let's say you want to store all the files that are on your desktop except the MyProject folder.
+You just add it to the ignore_files.txt file or use the ignore command.
+Once you try to store all the files on your Desktop, it will skip MyProjects folder.
