@@ -2,7 +2,7 @@ module AtticCleanup
   module Path
     class Custom
       attr_accessor :name, :path, :file, :line_nr
-      
+
       # Gets the last line in the default_path.txt file, 
       # which is the path to the default route
       def self.default
@@ -76,6 +76,19 @@ module AtticCleanup
         end
       end
 
+      def self.check_ignore(file)
+        is_file = false
+        lines = []
+        File.open(MyAttic::IGNORE, 'r') do |r|
+          while line = r.gets do
+            if line == file || line == file+"\n"
+              is_file = true
+            end
+          end
+        end
+        is_file
+      end
+      
       # Write to the custom_paths.txt file
       def write
         File.open(@file, 'a') do |w| 
@@ -83,7 +96,13 @@ module AtticCleanup
         end
       end
       
-      def self.default(value)
+      def self.set_ignore(value)
+        File.open(MyAttic::IGNORE, 'a') do |w|
+          w.write("\n"+value)
+        end
+      end
+      
+      def self.set_default(value)
         File.open(MyAttic::DEFAULT, 'w') do |w| 
           w.write("#Write your default location here.\n#{value}")
         end

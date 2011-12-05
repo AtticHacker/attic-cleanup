@@ -25,6 +25,7 @@ module MyAttic
   TODAY     = File.join(ENV["HOME"], "MyAttic", Date.today.to_s)
   CUSTOM    = File.join(ENV["HOME"], "MyAttic/custom_paths.txt")
   DEFAULT   = File.join(ENV["HOME"], "MyAttic/default_path.txt")
+  IGNORE    = File.join(ENV["HOME"], "MyAttic/ignore_files.txt")
   LOG       = File.join(ENV["HOME"], "MyAttic/log.txt")
   
   # Checks if all the folders and files exist, also deletes any empty folders
@@ -32,6 +33,7 @@ module MyAttic
   AtticCleanup::Init.check_folder(MyAttic::TODAY)
   AtticCleanup::Init.check_file(MyAttic::DEFAULT)
   AtticCleanup::Init.check_file(MyAttic::CUSTOM)
+  AtticCleanup::Init.check_file(MyAttic::IGNORE)
   AtticCleanup::Init.clear
   
   # This constant is set after the initializers because it reads

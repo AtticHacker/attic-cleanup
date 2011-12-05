@@ -124,12 +124,14 @@ module AtticCleanup
 
         # Moves each file to the MyAttic folder
         @bundle_items.each do |b|
+          selected_file = File.join( location, AtticCleanup::Storage::FolderFiles.find(folder_files.all_files, b) )
           # If the file wasn't found, print error
           if AtticCleanup::Storage::FolderFiles.find(folder_files.all_files, b) == nil
             puts "File ID " + b.to_s + " was not found"
+          elsif AtticCleanup::Path::Custom.check_ignore(selected_file) == true
+            puts "Ignored #{selected_file}"
           else
             # If file was found move it, print it and record it in the log
-            selected_file = File.join( location, AtticCleanup::Storage::FolderFiles.find(folder_files.all_files, b) )
             puts "Moving " + selected_file + " to your attic.."
             AtticCleanup::Log.save(selected_file, MyAttic::TODAY)
             FileUtils.mv(selected_file, MyAttic::TODAY)

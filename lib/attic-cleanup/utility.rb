@@ -56,9 +56,13 @@ module AtticCleanup
     
     desc "default", "Set a default path for store."
     def default(input)
-      AtticCleanup::Path::Custom.default(input)
+      AtticCleanup::Path::Custom.set_default(input)
     end
     
+    desc "ignore", "Add a file or folder you want to ignore."
+    def ignore(input)
+      AtticCleanup::Path::Custom.set_ignore(input)
+    end
     desc "shortcuts", "View all available shortcuts"
     # Show all the availible shortcuts from the custom_paths.txt file
     def shortcuts
